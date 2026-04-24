@@ -1,0 +1,11 @@
+/TwitterCloneBack/.idea/
+/TwitterCloneBack/**/.idea/
+
+# Build results
+/TwitterCloneBack/**/bin/
+/TwitterCloneBack/**/obj/
+
+# Project settings
+/TwitterCloneBack/TwitterCloneBack.Api/Properties/*
+/TwitterCloneBack/TwitterCloneBack.Api/appsettings.json
+/TwitterCloneBack/TwitterCloneBack.Api/appsettings.Development.json

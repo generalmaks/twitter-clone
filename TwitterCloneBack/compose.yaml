@@ -1,0 +1,7 @@
+﻿services:
+  twittercloneback:
+    image: twittercloneback
+    build:
+      context: .
+      dockerfile: TwitterCloneBack/Dockerfile
+

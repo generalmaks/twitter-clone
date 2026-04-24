@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Api", "TwitterCloneBack.Api\TwitterCloneBack.Api.csproj", "{9BFB8CB5-F3EA-46F6-86FF-1D0F6FD11458}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6DC3ECA-42F6-4AAD-B15C-9586B372C00E}"
+	ProjectSection(SolutionItems) = preProject
+		compose.yaml = compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Model", "TwitterCloneBack.Model\TwitterCloneBack.Model.csproj", "{1D4ADA6C-0DD7-460B-8F14-C1BAC5FF2060}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Dal", "TwitterCloneBack.Dal\TwitterCloneBack.Dal.csproj", "{355933D0-D52E-418C-AF9D-84292A9EE21E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Orchestrator", "TwitterCloneBack.Orchestrator\TwitterCloneBack.Orchestrator.csproj", "{76328E2A-ED73-41FA-9B40-34870F393046}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9BFB8CB5-F3EA-46F6-86FF-1D0F6FD11458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BFB8CB5-F3EA-46F6-86FF-1D0F6FD11458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BFB8CB5-F3EA-46F6-86FF-1D0F6FD11458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BFB8CB5-F3EA-46F6-86FF-1D0F6FD11458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D4ADA6C-0DD7-460B-8F14-C1BAC5FF2060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D4ADA6C-0DD7-460B-8F14-C1BAC5FF2060}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D4ADA6C-0DD7-460B-8F14-C1BAC5FF2060}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D4ADA6C-0DD7-460B-8F14-C1BAC5FF2060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{355933D0-D52E-418C-AF9D-84292A9EE21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355933D0-D52E-418C-AF9D-84292A9EE21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355933D0-D52E-418C-AF9D-84292A9EE21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355933D0-D52E-418C-AF9D-84292A9EE21E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76328E2A-ED73-41FA-9B40-34870F393046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76328E2A-ED73-41FA-9B40-34870F393046}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76328E2A-ED73-41FA-9B40-34870F393046}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76328E2A-ED73-41FA-9B40-34870F393046}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
