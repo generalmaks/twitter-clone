@@ -31,12 +31,20 @@ export interface GetUser {
     createdAt?: Date;
 }
 
+export interface LikeDto {
+    id?: number;
+    postId?: number;
+    likedById?: number;
+    likedAt?: Date;
+}
+
 export interface PostDto {
     id?: number;
     authorId?: number;
     textContent?: string | null;
     isDeleted?: boolean;
     createdAt?: Date;
+    likesIds?: Array<number>;
 }
 
 export interface UpdatePost {
