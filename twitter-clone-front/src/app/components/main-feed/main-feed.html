@@ -1,3 +1,8 @@
-<app-tweet></app-tweet>
-<app-tweet></app-tweet>
-<app-tweet></app-tweet>
+@if (posts() != null){
+    @for (post of posts(); track post.id) {
+        @if(post.id)
+        {
+            <app-tweet [post]="post"></app-tweet>
+        }
+    }
+}
