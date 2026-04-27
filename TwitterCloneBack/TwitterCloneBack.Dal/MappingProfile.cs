@@ -1,6 +1,8 @@
-﻿using AutoMapper;
-using TwitterCloneBack.Dal.Dao;
-using TwitterCloneBack.Model.Model;
+using AutoMapper;
+using TwitterCloneBack.Dal.Post.Dao;
+using TwitterCloneBack.Dal.User.Dao;
+using TwitterCloneBack.Model.Post.Model;
+using TwitterCloneBack.Model.User.Model;
 
 namespace TwitterCloneBack.Dal;
 

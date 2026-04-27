@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using TwitterCloneBack.Dal.Dao;
+using TwitterCloneBack.Dal.Post.Dao;
+using TwitterCloneBack.Dal.User.Dao;
 
 namespace TwitterCloneBack.Dal;
 

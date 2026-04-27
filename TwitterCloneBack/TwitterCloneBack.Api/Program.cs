@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using TwitterCloneBack.Dal;
-using TwitterCloneBack.Dal.Repository;
+using TwitterCloneBack.Dal.Post.Repository;
+using TwitterCloneBack.Dal.User.Repository;
 using TwitterCloneBack.Middleware;
-using TwitterCloneBack.Model.Interfaces;
-using TwitterCloneBack.Orchestrator.Orchestrator;
+using TwitterCloneBack.Model.Post.Interfaces;
+using TwitterCloneBack.Model.User.Interfaces;
+using TwitterCloneBack.Orchestrator.Post.Orchestrator;
+using TwitterCloneBack.Orchestrator.User.Orchestrator;
 
 var builder = WebApplication.CreateBuilder(args);
 
