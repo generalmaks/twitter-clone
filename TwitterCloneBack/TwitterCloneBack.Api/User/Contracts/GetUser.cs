@@ -1,4 +1,4 @@
-namespace TwitterCloneBack.Api.User.Contracts;
+namespace TwitterCloneBack.User.Contracts;
 
 public class GetUser
 {

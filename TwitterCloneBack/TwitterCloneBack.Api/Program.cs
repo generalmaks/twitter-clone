@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using TwitterCloneBack.Dal;
+using TwitterCloneBack.Dal.Like.Repository;
 using TwitterCloneBack.Dal.Post.Repository;
 using TwitterCloneBack.Dal.User.Repository;
 using TwitterCloneBack.Middleware;
+using TwitterCloneBack.Model.Like.Interfaces;
 using TwitterCloneBack.Model.Post.Interfaces;
 using TwitterCloneBack.Model.User.Interfaces;
+using TwitterCloneBack.Orchestrator.Like.Orchestrator;
 using TwitterCloneBack.Orchestrator.Post.Orchestrator;
 using TwitterCloneBack.Orchestrator.User.Orchestrator;
 
@@ -29,6 +32,8 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserOrchestrator, UserOrchestrator>();
 builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IPostOrchestrator, PostOrchestrator>();
+builder.Services.AddScoped<ILikeRepository, LikeRepository>();
+builder.Services.AddScoped<ILikeOrchestrator, LikeOrchestrator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

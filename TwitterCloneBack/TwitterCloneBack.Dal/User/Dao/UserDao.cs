@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using TwitterCloneBack.Dal.Like.Dao;
 using TwitterCloneBack.Dal.Post.Dao;
 
 namespace TwitterCloneBack.Dal.User.Dao;
@@ -35,4 +36,6 @@ public partial class UserDao
 
     [InverseProperty("Author")]
     public virtual ICollection<PostDao> Posts { get; set; } = new List<PostDao>();
+    
+    public ICollection<LikeDao> Likes { get; set; } = new List<LikeDao>();
 }

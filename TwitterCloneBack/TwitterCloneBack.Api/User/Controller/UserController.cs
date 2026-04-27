@@ -1,11 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneBack.Api.User.Contracts;
 using TwitterCloneBack.Model.User.Contracts;
 using TwitterCloneBack.Model.User.Interfaces;
-using TwitterCloneBack.Model.User.Model;
+using TwitterCloneBack.User.Contracts;
 
-namespace TwitterCloneBack.Api.User.Controller;
+namespace TwitterCloneBack.User.Controller;
 
 [ApiController]
 [Route("api/v1/users")]
