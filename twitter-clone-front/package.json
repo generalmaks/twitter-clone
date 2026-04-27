@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "fetch-openapi": "npx ng-openapi -c ./openapi.config.ts"
   },
   "private": true,
   "packageManager": "npm@11.6.0",
@@ -27,8 +28,10 @@
     "@angular/build": "^21.2.8",
     "@angular/cli": "^21.2.8",
     "@angular/compiler-cli": "^21.2.0",
+    "@openapitools/openapi-generator-cli": "^2.31.1",
     "@tailwindcss/postcss": "^4.1.12",
     "jsdom": "^28.0.0",
+    "ng-openapi": "^0.2.18",
     "postcss": "^8.5.3",
     "prettier": "^3.8.1",
     "tailwindcss": "^4.1.12",

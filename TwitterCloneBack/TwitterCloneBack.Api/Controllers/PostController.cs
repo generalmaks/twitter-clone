@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using TwitterCloneBack.Model.Contracts;
 using TwitterCloneBack.Model.Interfaces;
@@ -7,20 +8,20 @@ namespace TwitterCloneBack.Controllers;
 
 [ApiController]
 [Route("api/v1/posts")]
-public class PostController(IPostOrchestrator postOrchestrator) : ControllerBase
+public class PostController(IPostOrchestrator postOrchestrator, IMapper mapper) : ControllerBase
 {
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<PostDto>> GetPostByIdAsync(int id)
+    public async Task<ActionResult<GetPost>> GetPostByIdAsync(int id)
     {
-        return Ok(await postOrchestrator.GetPostByIdAsync(id));
+        return Ok(mapper.Map<GetPost>(await postOrchestrator.GetPostByIdAsync(id)));
     }
 
     [HttpGet]
-    public async Task<ActionResult<List<PostDto>>> GetPostsAsync(
+    public async Task<ActionResult<List<GetPost>>> GetPostsAsync(
         [FromQuery] int page = 1,
         [FromQuery] int pageSize = 20)
     {
-        return Ok(await postOrchestrator.GetPostsAsync(page, pageSize));
+        return Ok(mapper.Map<List<GetPost>>(await postOrchestrator.GetPostsAsync(page, pageSize)));
     }
 
     [HttpPost]

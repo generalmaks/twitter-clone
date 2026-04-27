@@ -11,5 +11,7 @@ public class UserMapping : Profile
     {
         CreateMap<UserDto, GetUser>();
         CreateMap<UserDto, UpdateUser>().ReverseMap();
+
+        CreateMap<PostDto, GetPost>();
     }
 }
