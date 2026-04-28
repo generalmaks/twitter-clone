@@ -9,7 +9,10 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import { MatIcon } from '@angular/material/icon';
-import { GetPost, GetUser, LikeService, UserService } from '../../api/http';
+import { GetPost } from '../../api/http/models/post.models';
+import { GetUser } from '../../api/http/models/user.models';
+import { UsersService } from '../../api/http/services/user.service';
+import { LikesService } from '../../api/http/services/like.service';
 
 @Component({
   selector: 'app-tweet',
@@ -32,15 +35,15 @@ export class Tweet implements OnInit {
   readonly author = signal<GetUser | null>(null);
   readonly likes = signal<number>(0);
 
-  private readonly userService = inject(UserService);
-  private readonly likeService = inject(LikeService);
+  private readonly userService = inject(UsersService);
+  private readonly likeService = inject(LikesService);
 
   ngOnInit(): void {
-    this.userService.apiV1UsersIdGet(this.post.authorId!)
+    this.userService.getById(this.post.authorId!)
       .subscribe(user => {
         this.author.set(user);
       });
-    this.likeService.apiV1LikePostPostIdCountGet(this.post.id!)
+    this.likeService.getPostLikesCount(this.post.id!)
       .subscribe(res =>
         this.likes.set(res)
       )
