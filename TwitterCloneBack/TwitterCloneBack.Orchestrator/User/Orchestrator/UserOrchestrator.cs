@@ -11,6 +11,10 @@ public class UserOrchestrator(IUserRepository userRepository) : IUserOrchestrato
     public async Task<UserDto> GetUserByIdAsync(int id) =>
         await userRepository.GetUserByIdAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found");
 
+    public async Task<UserDto> GetUserByEmailAsync(string email) =>
+        await userRepository.GetUserByEmailAsync(email) ??
+        throw new KeyNotFoundException($"User with email {email} not found");
+
     public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize) =>
         await userRepository.GetUsersAsync(page, pageSize);
 
@@ -45,10 +49,16 @@ public class UserOrchestrator(IUserRepository userRepository) : IUserOrchestrato
 
     public async Task<UserDto> DeleteUserAsync(int id) =>
         await userRepository.DeleteUserAsync(id) ?? throw new KeyNotFoundException($"User with id {id} not found");
+    
+    public async Task<bool> IsCorrectPassword(int userId, string password)
+    {
+        var user = await GetUserByIdAsync(userId);
+        return BCrypt.Net.BCrypt.Verify(password, Encoding.UTF8.GetString(user.PasswordHash));
+    }
 
     private static byte[] HashPassword(string password)
     {
-        var hash = BCrypt.Net.BCrypt.HashPassword(password) ?? throw new ArgumentException("Could not hash password.");
+        var hash = BCrypt.Net.BCrypt.HashPassword(password) ?? throw new ArgumentException("Could not hash password");
         return Encoding.UTF8.GetBytes(hash);
     }
 }

@@ -11,6 +11,9 @@ public class UserRepository(TwitterCloneContext db, IMapper mapper) : IUserRepos
     public async Task<UserDto> GetUserByIdAsync(int id) =>
         mapper.Map<UserDto>(await db.Users.FirstOrDefaultAsync(u => u.Id == id));
 
+    public async Task<UserDto> GetUserByEmailAsync(string email) =>
+        mapper.Map<UserDto>(await db.Users.FirstOrDefaultAsync(u => u.Email == email));
+
     public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize) =>
         mapper.Map<List<UserDto>>(
             await db.Users
