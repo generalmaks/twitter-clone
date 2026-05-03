@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Tweet } from "../tweet/tweet";
+import { Tweet } from "../../components/tweet/tweet";
 import { PostsService } from '../../api/http/services/post.service';
 import { GetPost } from '../../api/http/models/post.models';
 

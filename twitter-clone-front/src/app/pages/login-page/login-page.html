@@ -1,0 +1,55 @@
+<div class="flex flex-col items-center">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="w-full max-w-md flex flex-col">
+        <h1 class="text-3xl m-2 text-center">Login</h1>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your email</mat-label>
+
+            <input matInput name="email" type="email" [(ngModel)]="model.email" #email="ngModel" required email>
+
+            <mat-hint [class.text-red-500]="email.invalid && email.touched">
+                @if (email.touched && email.errors?.['required']) {
+                Email is required
+                } @else if (email.touched && email.errors?.['email']) {
+                Enter a valid email
+                } @else {
+                Example: user@example.com
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your password</mat-label>
+
+            <input matInput name="unhashedPassword" type="password" [(ngModel)]="model.password"
+                #password="ngModel" required minlength="8">
+
+            <mat-hint [class.text-red-500]="password.invalid && password.touched">
+                @if (password.touched && password.errors?.['required']) {
+                Password is required
+                } @else if (password.touched && password.errors?.['minlength']) {
+                Password must be at least 8 characters
+                } @else {
+                Min 8 characters
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        @if (errorMessage) {
+        <p class="text-red-500 text-sm text-center mb-2">
+            {{ errorMessage }}
+        </p>
+        }
+
+        <button matButton="filled" type="submit">
+            Login
+        </button>
+
+        <p class="m-2 text-center">
+            Don't have an account?
+            <a routerLink="/register" class="text-blue-600 font-semibold hover:underline cursor-pointer">
+                Register
+            </a>
+        </p>
+    </form>
+</div>

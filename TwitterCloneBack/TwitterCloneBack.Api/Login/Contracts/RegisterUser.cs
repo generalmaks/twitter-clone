@@ -1,9 +1,11 @@
-﻿namespace TwitterCloneBack.Login.Contracts;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TwitterCloneBack.Login.Contracts;
 
 public record RegisterUser(
-    string Username,
-    string DisplayUsername,
-    string Email,
-    string UnhashedPassword,
-    string Bio
+    [Required] [StringLength(30, MinimumLength = 3)] string Username,
+    [Required] [StringLength(30, MinimumLength = 3)] string DisplayUsername,
+    [Required] [EmailAddress] string Email,
+    [Required] [MinLength(8)] string UnhashedPassword,
+    [MaxLength(256)] string Bio
 );
