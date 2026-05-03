@@ -15,6 +15,9 @@ public class UserOrchestrator(IUserRepository userRepository) : IUserOrchestrato
         await userRepository.GetUserByEmailAsync(email) ??
         throw new KeyNotFoundException($"User with email {email} not found");
 
+    public async Task<bool> IsUserAlreadyExistsAsync(string email, string username) =>
+        await userRepository.IsUserAlreadyExistsAsync(email, username);
+
     public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize) =>
         await userRepository.GetUsersAsync(page, pageSize);
 

@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TwitterCloneBack.Model.Like.Interfaces;
 using TwitterCloneBack.Model.Like.Model;
@@ -38,15 +40,23 @@ public class LikeController(ILikeOrchestrator likeOrchestrator) : ControllerBase
         return Ok(await likeOrchestrator.IsPostLikedByUserAsync(postId, userId));
     }
 
-    [HttpPost("{postId:int}/{userId:int}")]
-    public async Task<ActionResult<LikeDto>> CreateLikeAsync(int postId, int userId)
+    [Authorize]
+    [HttpPost("{postId:int}")]
+    public async Task<ActionResult<LikeDto>> CreateLikeAsync(int postId)
     {
-        return Ok(await likeOrchestrator.CreateLikeAsync(postId, userId));
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var authUserId = int.Parse(userIdString!);
+        
+        return Ok(await likeOrchestrator.CreateLikeAsync(postId, authUserId));
     }
 
-    [HttpDelete("{postId:int}/{userId:int}")]
-    public async Task<ActionResult<LikeDto>> RemoveLikeAsync(int postId, int userId)
+    [Authorize]
+    [HttpDelete("{postId:int}")]
+    public async Task<ActionResult<LikeDto>> RemoveLikeAsync(int postId)
     {
-        return Ok(await likeOrchestrator.RemoveLikeAsync(postId, userId));
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var authUserId = int.Parse(userIdString!);
+        
+        return Ok(await likeOrchestrator.RemoveLikeAsync(postId, authUserId));
     }
 }
