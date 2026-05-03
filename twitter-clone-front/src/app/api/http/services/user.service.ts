@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { CreateUser, GetUser, UpdateUser } from '../models/user.models';
+import { GetUser, UpdateUser } from '../models/user.models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,15 +24,7 @@ export class UsersService {
     return this.http.get<GetUser[]>(this.url, { params });
   }
 
-  create(user: CreateUser): Observable<GetUser> {
-    return this.http.post<GetUser>(this.url, user);
-  }
-
   update(user: UpdateUser): Observable<GetUser> {
     return this.http.patch<GetUser>(this.url, user);
-  }
-
-  delete(id: number): Observable<GetUser> {
-    return this.http.delete<GetUser>(`${this.url}/${id}`);
   }
 }

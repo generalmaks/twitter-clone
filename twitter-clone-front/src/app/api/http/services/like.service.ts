@@ -32,11 +32,11 @@ export class LikesService {
     return this.http.get<boolean>(`${this.url}/post/${postId}/user/${userId}`);
   }
 
-  likePost(postId: number, userId: number): Observable<LikeDto> {
-    return this.http.post<LikeDto>(`${this.url}/${postId}/${userId}`, null);
+  likePost(postId: number): Observable<LikeDto> {
+    return this.http.post<LikeDto>(`${this.url}/${postId}`, null);
   }
 
-  unlikePost(postId: number, userId: number): Observable<LikeDto> {
-    return this.http.delete<LikeDto>(`${this.url}/${postId}/${userId}`);
+  unlikePost(postId: number): Observable<LikeDto> {
+    return this.http.delete<LikeDto>(`${this.url}/${postId}`);
   }
 }

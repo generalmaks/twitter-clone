@@ -13,8 +13,3 @@ export interface PostDto {
   createdAt: string;
   likesIds?: number[] | null;
 }
-
-export interface UpdatePost {
-  id: number;
-  textContent?: string | null;
-}
