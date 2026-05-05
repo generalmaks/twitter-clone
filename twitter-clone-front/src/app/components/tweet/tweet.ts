@@ -14,6 +14,7 @@ import { GetUser } from '../../api/http/models/user.models';
 import { UsersService } from '../../api/http/services/user.service';
 import { LikesService } from '../../api/http/services/like.service';
 import { AuthService } from '../../api/http/services/auth.service';
+import { PostsService } from '../../api/http/services/post.service';
 
 @Component({
   selector: 'app-tweet',
@@ -35,11 +36,13 @@ export class Tweet implements OnInit {
   @Input({ required: true }) post!: GetPost;
   readonly author = signal<GetUser | null>(null);
   readonly likes = signal<number>(0);
+  readonly replies = signal<number>(0);
   readonly isLiked = signal<boolean>(false);
 
   private readonly userService = inject(UsersService);
   private readonly likeService = inject(LikesService);
-  private readonly authService = inject(AuthService)
+  private readonly authService = inject(AuthService);
+  private readonly postService = inject(PostsService);
 
   ngOnInit(): void {
     this.userService.getById(this.post.authorId)
@@ -55,6 +58,9 @@ export class Tweet implements OnInit {
         this.isLiked.set(isLiked)
       })
     })
+    this.postService.getRepliesCount(this.post.id).subscribe(count => 
+      this.replies.set(count)
+    )
   }
 
   onLike() {

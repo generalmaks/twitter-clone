@@ -29,13 +29,20 @@ public class PostController(IPostOrchestrator postOrchestrator, IMapper mapper) 
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<PostDto>> CreatePostAsync([FromBody] PostDto postDto)
+    public async Task<ActionResult<PostDto>> CreatePostAsync([FromBody] CreatePost postDto)
     {
         var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var authUserId = int.Parse(userIdString!);
-        if (authUserId != postDto.AuthorId)
-            return Forbid("Tried to create post as different user");
-        var createdPost = await postOrchestrator.CreatePostAsync(postDto);
+        var post =
+            new PostDto
+            {
+                AuthorId = authUserId,
+                ReplyToPostId = postDto.ReplyToPostId,
+                TextContent = postDto.TextContent,
+                IsDeleted = false,
+                CreatedAt = DateTime.UtcNow,
+            };
+        var createdPost = await postOrchestrator.CreatePostAsync(post);
         return Ok(createdPost);
     }
 
@@ -49,5 +56,11 @@ public class PostController(IPostOrchestrator postOrchestrator, IMapper mapper) 
         if (postAuthor.AuthorId != authUserId)
             return Forbid("Tried to delete another users post");
         return Ok(await postOrchestrator.DeletePostAsync(id));
+    }
+
+    [HttpGet("count/{id:int}")]
+    public async Task<ActionResult<int>> CountRepliesAsync(int id)
+    {
+        return Ok(await postOrchestrator.CountRepliesAsync(id));
     }
 }

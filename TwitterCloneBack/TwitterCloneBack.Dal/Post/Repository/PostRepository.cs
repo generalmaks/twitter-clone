@@ -6,7 +6,9 @@ using TwitterCloneBack.Model.Post.Model;
 
 namespace TwitterCloneBack.Dal.Post.Repository;
 
-public class PostRepository(TwitterCloneContext db, IMapper mapper) : IPostRepository
+public class PostRepository(
+    TwitterCloneContext db,
+    IMapper mapper) : IPostRepository
 {
     public async Task<PostDto> GetPostByIdAsync(int id) =>
         mapper.Map<PostDto>(
@@ -34,7 +36,8 @@ public class PostRepository(TwitterCloneContext db, IMapper mapper) : IPostRepos
 
     public async Task<PostDto> UpdatePostAsync(PostDto postDto)
     {
-        var existingPost = await db.Posts.FirstOrDefaultAsync(p => p.Id == postDto.Id);
+        var existingPost =
+            await db.Posts.FirstOrDefaultAsync(p => p.Id == postDto.Id);
         if (existingPost is null)
         {
             return null!;
@@ -57,4 +60,9 @@ public class PostRepository(TwitterCloneContext db, IMapper mapper) : IPostRepos
         await db.SaveChangesAsync();
         return mapper.Map<PostDto>(post);
     }
+
+    public async Task<int> CountRepliesAsync(int id) =>
+        await db.Posts
+            .AsNoTracking()
+            .CountAsync(p => p.ReplyToPostId == id && !p.IsDeleted);
 }

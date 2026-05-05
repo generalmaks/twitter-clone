@@ -5,6 +5,8 @@ public class PostDto
     public int Id { get; set; }
 
     public int AuthorId { get; set; }
+    
+    public int? ReplyToPostId { get; set; }
 
     public string TextContent { get; set; } = null!;
 

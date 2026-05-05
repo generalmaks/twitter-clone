@@ -30,4 +30,10 @@ public class PostOrchestrator(IPostRepository postRepository) : IPostOrchestrato
 
     public async Task<PostDto> DeletePostAsync(int id) =>
         await postRepository.DeletePostAsync(id) ?? throw new KeyNotFoundException($"Post with id {id} not found");
+
+    public async Task<int> CountRepliesAsync(int id)
+    {
+        _ = await GetPostByIdAsync(id);
+        return await postRepository.CountRepliesAsync(id);
+    }
 }

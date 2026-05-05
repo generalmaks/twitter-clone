@@ -2,6 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using TwitterCloneBack.Dal;
 using TwitterCloneBack.Dal.Like.Repository;
 using TwitterCloneBack.Dal.Post.Repository;
@@ -62,7 +63,37 @@ builder.Services.AddScoped<ILikeOrchestrator, LikeOrchestrator>();
 builder.Services.AddSingleton<JwtTokenGenerator>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Type = SecuritySchemeType.ApiKey,
+        Description = "Jwt authorization",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        Flows = null,
+        OpenIdConnectUrl = null,
+        Extensions = null,
+        UnresolvedReference = false,
+        Reference = null
+    });
+    
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            }, []
+        }
+    });
+});
 
 var app = builder.Build();
 
