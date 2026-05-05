@@ -6,6 +6,7 @@ import { MatButton } from '@angular/material/button';
 import { AuthService } from '../../api/http/services/auth.service';
 import { GetUser } from '../../api/http/models/user.models';
 import { RouterLink } from "@angular/router";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ import { RouterLink } from "@angular/router";
     MatIconModule,
     SearchBar,
     MatButton,
-    RouterLink
+    RouterLink,
+    MatTooltipModule
 ],
   templateUrl: './header.html',
   styleUrl: './header.css',
@@ -36,5 +38,9 @@ export class Header implements OnInit {
     this.authService.getUserInfo().subscribe(user =>
       this.userInfo.set(user)
     )
+  }
+
+  onLogout() {
+    this.authService.logout()
   }
  }

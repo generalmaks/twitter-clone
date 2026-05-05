@@ -13,6 +13,7 @@ import { GetPost } from '../../api/http/models/post.models';
 import { GetUser } from '../../api/http/models/user.models';
 import { UsersService } from '../../api/http/services/user.service';
 import { LikesService } from '../../api/http/services/like.service';
+import { AuthService } from '../../api/http/services/auth.service';
 
 @Component({
   selector: 'app-tweet',
@@ -34,18 +35,39 @@ export class Tweet implements OnInit {
   @Input({ required: true }) post!: GetPost;
   readonly author = signal<GetUser | null>(null);
   readonly likes = signal<number>(0);
+  readonly isLiked = signal<boolean>(false);
 
   private readonly userService = inject(UsersService);
   private readonly likeService = inject(LikesService);
+  private readonly authService = inject(AuthService)
 
   ngOnInit(): void {
-    this.userService.getById(this.post.authorId!)
+    this.userService.getById(this.post.authorId)
       .subscribe(user => {
         this.author.set(user);
       });
-    this.likeService.getPostLikesCount(this.post.id!)
+    this.likeService.getPostLikesCount(this.post.id)
       .subscribe(res =>
         this.likes.set(res)
-      )
+      );
+    this.authService.getUserInfo().subscribe(user => {
+      this.likeService.isPostLikedByUser(this.post.id, user!.id).subscribe(isLiked => {
+        this.isLiked.set(isLiked)
+      })
+    })
+  }
+
+  onLike() {
+    if (this.isLiked()) {
+      this.likeService.unlikePost(this.post.id!).subscribe(() => {
+        this.isLiked.set(false);
+        this.likes.update(count => count - 1);
+      });
+    } else {
+      this.likeService.likePost(this.post.id!).subscribe(() => {
+        this.isLiked.set(true);
+        this.likes.update(count => count + 1);
+      });
+    }
   }
 }
