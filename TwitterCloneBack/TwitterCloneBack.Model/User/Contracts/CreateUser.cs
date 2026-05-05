@@ -14,7 +14,8 @@ public class CreateUser
     [Required]
     public string DisplayUsername { get; set; } = null!;
 
-    [Required] public string Password { get; set; } = "";
+    [Required]
+    public string Password { get; set; } = "";
 
     public string? Bio { get; set; }
 }

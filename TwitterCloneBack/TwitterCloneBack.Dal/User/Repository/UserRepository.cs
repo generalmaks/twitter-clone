@@ -6,19 +6,34 @@ using TwitterCloneBack.Model.User.Model;
 
 namespace TwitterCloneBack.Dal.User.Repository;
 
-public class UserRepository(TwitterCloneContext db, IMapper mapper) : IUserRepository
+public class UserRepository(
+    TwitterCloneContext db,
+    IMapper mapper) : IUserRepository
 {
-    public async Task<UserDto> GetUserByIdAsync(int id) =>
-        mapper.Map<UserDto>(await db.Users.FirstOrDefaultAsync(u => u.Id == id));
+    public async Task<UserDto> GetUserByIdAsync(int id)
+    {
+        return mapper.Map<UserDto>(
+            await db.Users.FirstOrDefaultAsync(u => u.Id == id));
+    }
 
-    public async Task<UserDto> GetUserByEmailAsync(string email) =>
-        mapper.Map<UserDto>(await db.Users.FirstOrDefaultAsync(u => u.Email == email));
+    public async Task<UserDto> GetUserByEmailAsync(string email)
+    {
+        return mapper.Map<UserDto>(
+            await db.Users.FirstOrDefaultAsync(u => u.Email == email));
+    }
 
-    public async Task<bool> IsUserAlreadyExistsAsync(string email, string username) =>
-        await db.Users.AnyAsync(u => u.Email == email || u.Username == username);
+    public async Task<bool> IsUserAlreadyExistsAsync(
+        string email,
+        string username
+    )
+    {
+        return await db.Users.AnyAsync(u =>
+            u.Email == email || u.Username == username);
+    }
 
-    public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize) =>
-        mapper.Map<List<UserDto>>(
+    public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize)
+    {
+        return mapper.Map<List<UserDto>>(
             await db.Users
                 .AsNoTracking()
                 .OrderBy(p => p.Id)
@@ -26,21 +41,21 @@ public class UserRepository(TwitterCloneContext db, IMapper mapper) : IUserRepos
                 .Take(pageSize)
                 .ToListAsync()
         );
+    }
 
     public async Task<UserDto> CreateUserAsync(UserDto userDto)
     {
-        var createdUserEntity = await db.Users.AddAsync(mapper.Map<UserDao>(userDto));
+        var createdUserEntity =
+            await db.Users.AddAsync(mapper.Map<UserDao>(userDto));
         await db.SaveChangesAsync();
         return mapper.Map<UserDto>(createdUserEntity.Entity);
     }
 
     public async Task<UserDto> UpdateUserAsync(UserDto userDto)
     {
-        var existingUser = await db.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
-        if (existingUser is null)
-        {
-            return null!;
-        }
+        var existingUser =
+            await db.Users.FirstOrDefaultAsync(u => u.Id == userDto.Id);
+        if (existingUser is null) return null!;
 
         mapper.Map(userDto, existingUser);
         await db.SaveChangesAsync();
@@ -50,10 +65,7 @@ public class UserRepository(TwitterCloneContext db, IMapper mapper) : IUserRepos
     public async Task<UserDto> DeleteUserAsync(int id)
     {
         var user = await db.Users.FirstOrDefaultAsync(u => u.Id == id);
-        if (user is null)
-        {
-            return null!;
-        }
+        if (user is null) return null!;
 
         db.Users.Remove(user);
         await db.SaveChangesAsync();

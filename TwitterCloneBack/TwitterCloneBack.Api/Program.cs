@@ -23,17 +23,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
 
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
 
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(key)
-        };
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
     });
 
 builder.Services.AddAuthorization();
@@ -50,9 +51,11 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<TwitterCloneContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("SqlServer")));
 
-builder.Services.AddAutoMapper(_ => { }, AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddAutoMapper(_ => { },
+    AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserOrchestrator, UserOrchestrator>();
@@ -79,18 +82,20 @@ builder.Services.AddSwaggerGen(options =>
         UnresolvedReference = false,
         Reference = null
     });
-    
+
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
             new OpenApiSecurityScheme
             {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            }, []
+                Reference =
+                    new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+            },
+            []
         }
     });
 });

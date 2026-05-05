@@ -1,11 +1,9 @@
-using TwitterCloneBack.Model.User.Contracts;
-
 namespace TwitterCloneBack.Model.User.Model;
 
 public class UserDto
 {
     public int Id { get; set; }
-    
+
     public int? ReplyToPost { get; set; }
 
     public string Username { get; set; } = null!;

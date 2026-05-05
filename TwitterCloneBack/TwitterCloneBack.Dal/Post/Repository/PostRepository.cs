@@ -10,14 +10,17 @@ public class PostRepository(
     TwitterCloneContext db,
     IMapper mapper) : IPostRepository
 {
-    public async Task<PostDto> GetPostByIdAsync(int id) =>
-        mapper.Map<PostDto>(
+    public async Task<PostDto> GetPostByIdAsync(int id)
+    {
+        return mapper.Map<PostDto>(
             await db.Posts
                 .AsNoTracking()
                 .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted));
+    }
 
-    public async Task<List<PostDto>> GetPostsAsync(int page, int pageSize) =>
-        mapper.Map<List<PostDto>>(
+    public async Task<List<PostDto>> GetPostsAsync(int page, int pageSize)
+    {
+        return mapper.Map<List<PostDto>>(
             await db.Posts
                 .AsNoTracking()
                 .Where(p => !p.IsDeleted)
@@ -25,6 +28,7 @@ public class PostRepository(
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync());
+    }
 
     public async Task<PostDto> CreatePostAsync(PostDto postDto)
     {
@@ -38,10 +42,7 @@ public class PostRepository(
     {
         var existingPost =
             await db.Posts.FirstOrDefaultAsync(p => p.Id == postDto.Id);
-        if (existingPost is null)
-        {
-            return null!;
-        }
+        if (existingPost is null) return null!;
 
         mapper.Map(postDto, existingPost);
         await db.SaveChangesAsync();
@@ -51,18 +52,17 @@ public class PostRepository(
     public async Task<PostDto> DeletePostAsync(int id)
     {
         var post = await db.Posts.FirstOrDefaultAsync(p => p.Id == id);
-        if (post is null)
-        {
-            return null!;
-        }
+        if (post is null) return null!;
 
         post.IsDeleted = true;
         await db.SaveChangesAsync();
         return mapper.Map<PostDto>(post);
     }
 
-    public async Task<int> CountRepliesAsync(int id) =>
-        await db.Posts
+    public async Task<int> CountRepliesAsync(int id)
+    {
+        return await db.Posts
             .AsNoTracking()
             .CountAsync(p => p.ReplyToPostId == id && !p.IsDeleted);
+    }
 }
