@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { Tweet } from "../tweet/tweet";
-import { GetPost, PostService } from '../../api/http';
+import { Tweet } from "../../components/tweet/tweet";
+import { PostsService } from '../../api/http/services/post.service';
+import { GetPost } from '../../api/http/models/post.models';
 
 @Component({
   selector: 'app-main-feed',
@@ -10,12 +11,12 @@ import { GetPost, PostService } from '../../api/http';
   standalone: true
 })
 export class MainFeed implements OnInit {
-  private readonly postService = inject(PostService);
+  private readonly postService = inject(PostsService);
 
   readonly posts = signal<GetPost[] | null>(null);
 
   ngOnInit(): void {
-    this.postService.apiV1PostsGet(1, 50).subscribe(posts => {
+    this.postService.getAll(1, 50).subscribe(posts => {
       this.posts.set(posts)
     })
   }

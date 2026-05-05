@@ -1,11 +1,13 @@
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneBack.Api.Post.Contracts;
 using TwitterCloneBack.Model.Post.Contracts;
 using TwitterCloneBack.Model.Post.Interfaces;
 using TwitterCloneBack.Model.Post.Model;
+using TwitterCloneBack.Post.Contracts;
 
-namespace TwitterCloneBack.Api.Post.Controller;
+namespace TwitterCloneBack.Post.Controller;
 
 [ApiController]
 [Route("api/v1/posts")]
@@ -25,22 +27,27 @@ public class PostController(IPostOrchestrator postOrchestrator, IMapper mapper) 
         return Ok(mapper.Map<List<GetPost>>(await postOrchestrator.GetPostsAsync(page, pageSize)));
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult<PostDto>> CreatePostAsync([FromBody] PostDto postDto)
     {
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var authUserId = int.Parse(userIdString!);
+        if (authUserId != postDto.AuthorId)
+            return Forbid("Tried to create post as different user");
         var createdPost = await postOrchestrator.CreatePostAsync(postDto);
         return Ok(createdPost);
     }
 
-    [HttpPatch]
-    public async Task<ActionResult<PostDto>> PatchPostAsync([FromBody] UpdatePost updatePost)
-    {
-        return Ok(await postOrchestrator.PatchPostAsync(updatePost));
-    }
-
+    [Authorize]
     [HttpDelete("{id:int}")]
     public async Task<ActionResult<PostDto>> DeletePostAsync(int id)
     {
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var authUserId = int.Parse(userIdString!);
+        var postAuthor = await postOrchestrator.GetPostByIdAsync(id);
+        if (postAuthor.AuthorId != authUserId)
+            return Forbid("Tried to delete another users post");
         return Ok(await postOrchestrator.DeletePostAsync(id));
     }
 }

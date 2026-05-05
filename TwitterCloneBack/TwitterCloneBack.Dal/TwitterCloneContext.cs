@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using TwitterCloneBack.Dal.Like.Dao;
 using TwitterCloneBack.Dal.Post.Dao;
 using TwitterCloneBack.Dal.User.Dao;
 
@@ -20,6 +21,8 @@ public partial class TwitterCloneContext : DbContext
     public virtual DbSet<PostDao> Posts { get; set; }
 
     public virtual DbSet<UserDao> Users { get; set; }
+    
+    public virtual DbSet<LikeDao> Likes { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

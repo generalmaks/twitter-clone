@@ -1,0 +1,95 @@
+<div class="flex flex-col items-center">
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" class="w-full max-w-md flex flex-col">
+        <h1 class="text-3xl m-2 text-center">Register</h1>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your username</mat-label>
+            <input matInput name="username" [(ngModel)]="model.username" #username="ngModel" required minlength="3"
+                maxlength="30">
+
+            <mat-hint [class.text-red-500]="username.invalid && username.touched">
+                @if (username.touched && username.errors?.['required']) {
+                Username is required
+                } @else if (username.touched && username.errors?.['minlength']) {
+                Username must be at least 3 characters
+                } @else {
+                3-30 characters
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your display username</mat-label>
+            <input matInput name="displayUsername" [(ngModel)]="model.displayUsername" #displayUsername="ngModel"
+                required maxlength="30">
+
+            <mat-hint [class.text-red-500]="displayUsername.invalid && displayUsername.touched">
+                @if (displayUsername.touched && displayUsername.errors?.['required']) {
+                Display username is required
+                } @else if (displayUsername.touched && displayUsername.errors?.['maxlength']) {
+                Display username must be at most 30 characters
+                } @else {
+                Max 30 characters
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your email</mat-label>
+            <input matInput name="email" type="email" [(ngModel)]="model.email" #email="ngModel" required email
+                maxlength="255">
+
+            <mat-hint [class.text-red-500]="email.invalid && email.touched">
+                @if (email.touched && email.errors?.['required']) {
+                Email is required
+                } @else if (email.touched && email.errors?.['email']) {
+                Enter a valid email
+                } @else if (email.touched && email.errors?.['maxlength']) {
+                Email must be at most 255 characters
+                } @else {
+                Example: user@example.com
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your password</mat-label>
+            <input matInput name="unhashedPassword" type="password" [(ngModel)]="model.unhashedPassword"
+                #password="ngModel" required minlength="8">
+
+            <mat-hint [class.text-red-500]="password.invalid && password.touched">
+                @if (password.touched && password.errors?.['required']) {
+                Password is required
+                } @else if (password.touched && password.errors?.['minlength']) {
+                Password must be at least 8 characters
+                } @else {
+                Min 8 characters
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+            <mat-label>Enter your bio</mat-label>
+            <textarea matInput name="bio" [(ngModel)]="model.bio" #bio="ngModel" maxlength="256"></textarea>
+
+            <mat-hint [class.text-red-500]="bio.invalid && bio.touched">
+                @if (bio.touched && bio.errors?.['maxlength']) {
+                Bio must be at most 256 characters
+                } @else {
+                Optional, max 256 characters
+                }
+            </mat-hint>
+        </mat-form-field>
+
+        <button matButton="filled" type="submit" [disabled]="registerForm.invalid">
+            Register
+        </button>
+
+        <p class="mt-2 text-center">
+            Already have an account?
+            <a routerLink="/login" class="text-blue-600 font-semibold hover:underline cursor-pointer">
+                Login
+            </a>
+        </p>
+    </form>
+</div>

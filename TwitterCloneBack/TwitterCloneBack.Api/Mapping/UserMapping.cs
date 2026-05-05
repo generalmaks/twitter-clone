@@ -1,9 +1,9 @@
 using AutoMapper;
-using TwitterCloneBack.Api.Post.Contracts;
-using TwitterCloneBack.Api.User.Contracts;
 using TwitterCloneBack.Model.Post.Model;
 using TwitterCloneBack.Model.User.Contracts;
 using TwitterCloneBack.Model.User.Model;
+using TwitterCloneBack.Post.Contracts;
+using TwitterCloneBack.User.Contracts;
 
 namespace TwitterCloneBack.Mapping;
 

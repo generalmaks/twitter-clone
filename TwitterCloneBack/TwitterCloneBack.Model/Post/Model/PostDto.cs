@@ -11,4 +11,6 @@ public class PostDto
     public bool IsDeleted { get; set; }
 
     public DateTime CreatedAt { get; set; }
+
+    public List<int> LikesIds { get; set; } = [];
 }

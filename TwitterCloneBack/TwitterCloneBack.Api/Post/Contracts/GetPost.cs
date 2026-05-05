@@ -1,4 +1,4 @@
-namespace TwitterCloneBack.Api.Post.Contracts;
+namespace TwitterCloneBack.Post.Contracts;
 
 public class GetPost
 {

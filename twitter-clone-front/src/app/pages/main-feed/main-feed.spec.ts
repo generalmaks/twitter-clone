@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of } from 'rxjs';
 
 import { MainFeed } from './main-feed';
+import { PostsService } from '../../api/http/services/post.service';
 
 describe('MainFeed', () => {
   let component: MainFeed;
@@ -9,6 +11,14 @@ describe('MainFeed', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MainFeed],
+      providers: [
+        {
+          provide: PostsService,
+          useValue: {
+            getAll: () => of([]),
+          },
+        },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(MainFeed);

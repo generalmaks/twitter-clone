@@ -1,11 +1,12 @@
+using System.Security.Claims;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneBack.Api.User.Contracts;
 using TwitterCloneBack.Model.User.Contracts;
 using TwitterCloneBack.Model.User.Interfaces;
-using TwitterCloneBack.Model.User.Model;
+using TwitterCloneBack.User.Contracts;
 
-namespace TwitterCloneBack.Api.User.Controller;
+namespace TwitterCloneBack.User.Controller;
 
 [ApiController]
 [Route("api/v1/users")]
@@ -25,22 +26,16 @@ public class UserController(IUserOrchestrator userOrchestrator, IMapper mapper) 
         return Ok(mapper.Map<List<GetUser>>(await userOrchestrator.GetUsersAsync(page, pageSize)));
     }
 
-    [HttpPost]
-    public async Task<ActionResult<GetUser>> CreateUserAsync([FromBody] CreateUser createUserDto)
-    {
-        var createdUser = await userOrchestrator.CreateUserAsync(createUserDto);
-        return Ok(mapper.Map<GetUser>(createdUser));
-    }
-
+    [Authorize]
     [HttpPatch]
     public async Task<ActionResult<GetUser>> UpdateUserAsync([FromBody] UpdateUser updateUser)
     {
-        return Ok(mapper.Map<GetUser>(await userOrchestrator.UpdateUserAsync(updateUser)));
-    }
+        var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var authUserId = int.Parse(userIdString!);
+        if (updateUser.Id != authUserId)
+            return Forbid("Trying to update different user");
 
-    [HttpDelete("{id:int}")]
-    public async Task<ActionResult<GetUser>> DeleteUserAsync(int id)
-    {
-        return Ok(mapper.Map<GetUser>(await userOrchestrator.DeleteUserAsync(id)));
+        _ = await userOrchestrator.GetUserByIdAsync(authUserId);
+        return Ok(mapper.Map<GetUser>(await userOrchestrator.UpdateUserAsync(updateUser)));
     }
 }
