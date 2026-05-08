@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 
-namespace TwitterCloneBack.Middleware;
+namespace TwitterCloneBack;
 
 public class GlobalExceptionMiddleware(
     RequestDelegate next,
@@ -18,15 +18,18 @@ public class GlobalExceptionMiddleware(
             logger.LogError(ex, "Unhandled exception");
 
             context.Response.ContentType = "application/json";
-            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            context.Response.StatusCode =
+                (int)HttpStatusCode.InternalServerError;
 
-            var response = new
-            {
-                statusCode = context.Response.StatusCode,
-                message = $"{ex.Message}"
-            };
+            var response =
+                new
+                {
+                    statusCode = context.Response.StatusCode,
+                    message = $"{ex.Message}"
+                };
 
-            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            await context.Response.WriteAsync(
+                JsonSerializer.Serialize(response));
         }
     }
 }

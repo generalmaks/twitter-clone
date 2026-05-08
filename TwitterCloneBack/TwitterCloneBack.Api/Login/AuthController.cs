@@ -20,31 +20,34 @@ public class AuthController(
         var user = await userOrchestrator.GetUserByEmailAsync(login.Email);
 
         if (!await userOrchestrator.IsCorrectPassword(user.Id, login.Password))
-            return Unauthorized($"Invalid credentials");
+            return Unauthorized("Invalid credentials");
 
         var token = jwtTokenGenerator.GenerateJwt(user);
 
         return Ok(new
         {
-            userId = user.Id,
-            token = token
+            userId = user.Id, token
         });
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register([FromBody] RegisterUser registerUser)
+    public async Task<IActionResult> Register(
+        [FromBody] RegisterUser registerUser
+    )
     {
-        if (await userOrchestrator.IsUserAlreadyExistsAsync(registerUser.Email, registerUser.Username))
-            throw new ArgumentException($"User already exists");
+        if (await userOrchestrator.IsUserAlreadyExistsAsync(registerUser.Email,
+                registerUser.Username))
+            throw new ArgumentException("User already exists");
 
-        var user = await userOrchestrator.CreateUserAsync(new CreateUser
-        {
-            Username = registerUser.Username,
-            Email = registerUser.Email,
-            DisplayUsername = registerUser.DisplayUsername,
-            Password = registerUser.UnhashedPassword,
-            Bio = registerUser.Bio
-        });
+        var user =
+            await userOrchestrator.CreateUserAsync(new CreateUser
+            {
+                Username = registerUser.Username,
+                Email = registerUser.Email,
+                DisplayUsername = registerUser.DisplayUsername,
+                Password = registerUser.UnhashedPassword,
+                Bio = registerUser.Bio
+            });
 
         return Ok(mapper.Map<GetUser>(user));
     }

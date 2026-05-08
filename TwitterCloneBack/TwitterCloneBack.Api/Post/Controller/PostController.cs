@@ -2,7 +2,6 @@ using System.Security.Claims;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TwitterCloneBack.Model.Post.Contracts;
 using TwitterCloneBack.Model.Post.Interfaces;
 using TwitterCloneBack.Model.Post.Model;
 using TwitterCloneBack.Post.Contracts;
@@ -11,31 +10,46 @@ namespace TwitterCloneBack.Post.Controller;
 
 [ApiController]
 [Route("api/v1/posts")]
-public class PostController(IPostOrchestrator postOrchestrator, IMapper mapper) : ControllerBase
+public class PostController(
+    IPostOrchestrator postOrchestrator,
+    IMapper mapper) : ControllerBase
 {
     [HttpGet("{id:int}")]
     public async Task<ActionResult<GetPost>> GetPostByIdAsync(int id)
     {
-        return Ok(mapper.Map<GetPost>(await postOrchestrator.GetPostByIdAsync(id)));
+        return Ok(
+            mapper.Map<GetPost>(await postOrchestrator.GetPostByIdAsync(id)));
     }
 
     [HttpGet]
     public async Task<ActionResult<List<GetPost>>> GetPostsAsync(
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 20)
+        [FromQuery] int pageSize = 20
+    )
     {
-        return Ok(mapper.Map<List<GetPost>>(await postOrchestrator.GetPostsAsync(page, pageSize)));
+        return Ok(
+            mapper.Map<List<GetPost>>(
+                await postOrchestrator.GetPostsAsync(page, pageSize)));
     }
 
     [Authorize]
     [HttpPost]
-    public async Task<ActionResult<PostDto>> CreatePostAsync([FromBody] PostDto postDto)
+    public async Task<ActionResult<PostDto>> CreatePostAsync(
+        [FromBody] CreatePost postDto
+    )
     {
         var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var authUserId = int.Parse(userIdString!);
-        if (authUserId != postDto.AuthorId)
-            return Forbid("Tried to create post as different user");
-        var createdPost = await postOrchestrator.CreatePostAsync(postDto);
+        var post =
+            new PostDto
+            {
+                AuthorId = authUserId,
+                ReplyToPostId = postDto.ReplyToPostId,
+                TextContent = postDto.TextContent,
+                IsDeleted = false,
+                CreatedAt = DateTime.UtcNow
+            };
+        var createdPost = await postOrchestrator.CreatePostAsync(post);
         return Ok(createdPost);
     }
 
@@ -49,5 +63,17 @@ public class PostController(IPostOrchestrator postOrchestrator, IMapper mapper) 
         if (postAuthor.AuthorId != authUserId)
             return Forbid("Tried to delete another users post");
         return Ok(await postOrchestrator.DeletePostAsync(id));
+    }
+
+    [HttpGet("count/{id:int}")]
+    public async Task<ActionResult<int>> CountRepliesAsync(int id)
+    {
+        return Ok(await postOrchestrator.CountRepliesAsync(id));
+    }
+
+    [HttpGet("replies/{id:int}")]
+    public async Task<ActionResult<List<GetPost>>> GetRepliesToPostAsync(int id)
+    {
+        return Ok(await postOrchestrator.GetRepliesToPostAsync(id));
     }
 }

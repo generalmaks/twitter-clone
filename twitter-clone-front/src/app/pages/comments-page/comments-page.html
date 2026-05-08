@@ -1,0 +1,18 @@
+@if (mainPost(); as post) {
+  <app-tweet [post]="post"></app-tweet>
+
+  <div class="my-2">
+    <app-composer
+      [replyToPostId]="post.id"
+    ></app-composer>
+  </div>
+}
+
+<div class="m-3">
+  <mat-divider></mat-divider>
+</div>
+@if (replies(); as replies) {
+  @for (reply of replies; track $index) {
+    <app-tweet [post]="reply"></app-tweet>
+  }
+}

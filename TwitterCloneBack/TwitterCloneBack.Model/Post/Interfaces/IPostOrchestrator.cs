@@ -11,4 +11,6 @@ public interface IPostOrchestrator
     Task<PostDto> UpdatePostAsync(PostDto postDto);
     Task<PostDto> PatchPostAsync(UpdatePost updatePost);
     Task<PostDto> DeletePostAsync(int id);
+    Task<int> CountRepliesAsync(int id);
+    Task<IEnumerable<PostDto>> GetRepliesToPostAsync(int id);
 }

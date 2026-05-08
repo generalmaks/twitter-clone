@@ -8,5 +8,7 @@ public class GetPost
 
     public string TextContent { get; set; } = null!;
 
+    public int? ReplyToPostId { get; set; } = null!;
+
     public DateTime CreatedAt { get; set; }
 }

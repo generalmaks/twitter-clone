@@ -6,6 +6,8 @@ public class PostDto
 
     public int AuthorId { get; set; }
 
+    public int? ReplyToPostId { get; set; }
+
     public string TextContent { get; set; } = null!;
 
     public bool IsDeleted { get; set; }

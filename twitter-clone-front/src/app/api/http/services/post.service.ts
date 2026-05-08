@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { GetPost, PostDto } from '../models/post.models';
+import { CreatePost, GetPost, PostDto } from '../models/post.models';
 
 @Injectable({
   providedIn: 'root',
@@ -24,11 +24,19 @@ export class PostsService {
     return this.http.get<GetPost[]>(this.url, { params });
   }
 
-  create(post: PostDto): Observable<PostDto> {
+  getRepliesCount(id: number): Observable<number> {
+    return this.http.get<number>(`${this.url}/count/${id}`);
+  }
+
+  create(post: CreatePost): Observable<PostDto> {
     return this.http.post<PostDto>(this.url, post);
   }
 
   delete(id: number): Observable<PostDto> {
     return this.http.delete<PostDto>(`${this.url}/${id}`);
+  }
+
+  getReplies(id: number): Observable<GetPost[]> {
+    return this.http.get<GetPost[]>(`${this.url}/replies/${id}`)
   }
 }

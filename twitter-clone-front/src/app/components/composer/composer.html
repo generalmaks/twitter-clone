@@ -1,0 +1,33 @@
+<form class="w-full" (ngSubmit)="submitPost()">
+  <mat-card class="p-4 rounded-2xl shadow-sm">
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>
+        {{ replyToPostId ? 'Write your reply' : 'Have anything on your mind?' }}
+      </mat-label>
+
+      <textarea
+        matInput
+        name="textContent"
+        [ngModel]="textContent()"
+        (ngModelChange)="textContent.set($event)"
+        placeholder="Write it here..."
+        rows="3"
+        maxlength="200"
+      ></textarea>
+
+      <mat-hint align="end">
+        {{ textContent().length }}/200
+      </mat-hint>
+    </mat-form-field>
+
+    <div class="flex justify-end mt-2">
+      <button
+        matButton="filled"
+        type="submit"
+        [disabled]="!textContent().trim() || textContent().length > 200"
+      >
+        {{ replyToPostId ? 'Reply' : 'Post' }}
+      </button>
+    </div>
+  </mat-card>
+</form>

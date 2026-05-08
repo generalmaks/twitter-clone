@@ -8,7 +8,8 @@ namespace TwitterCloneBack.Like.Controller;
 
 [ApiController]
 [Route("api/v1/like")]
-public class LikeController(ILikeOrchestrator likeOrchestrator) : ControllerBase
+public class LikeController(
+    ILikeOrchestrator likeOrchestrator) : ControllerBase
 {
     [HttpGet("{likeId:int}")]
     public async Task<ActionResult<LikeDto>> GetByIdAsync(int likeId)
@@ -17,13 +18,17 @@ public class LikeController(ILikeOrchestrator likeOrchestrator) : ControllerBase
     }
 
     [HttpGet("post/{postId:int}")]
-    public async Task<ActionResult<List<LikeDto>>> GetLikesOnPostAsync(int postId)
+    public async Task<ActionResult<List<LikeDto>>> GetLikesOnPostAsync(
+        int postId
+    )
     {
         return Ok(await likeOrchestrator.GetLikesOnPostAsync(postId));
     }
 
     [HttpGet("user/{userId:int}")]
-    public async Task<ActionResult<List<LikeDto>>> GetAllLikesFromUserAsync(int userId)
+    public async Task<ActionResult<List<LikeDto>>> GetAllLikesFromUserAsync(
+        int userId
+    )
     {
         return Ok(await likeOrchestrator.GetAllLikesFromUserAsync(userId));
     }
@@ -35,9 +40,13 @@ public class LikeController(ILikeOrchestrator likeOrchestrator) : ControllerBase
     }
 
     [HttpGet("post/{postId:int}/user/{userId:int}")]
-    public async Task<ActionResult<bool>> IsPostLikedByUserAsync(int postId, int userId)
+    public async Task<ActionResult<bool>> IsPostLikedByUserAsync(
+        int postId,
+        int userId
+    )
     {
-        return Ok(await likeOrchestrator.IsPostLikedByUserAsync(postId, userId));
+        return Ok(
+            await likeOrchestrator.IsPostLikedByUserAsync(postId, userId));
     }
 
     [Authorize]
@@ -46,7 +55,7 @@ public class LikeController(ILikeOrchestrator likeOrchestrator) : ControllerBase
     {
         var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var authUserId = int.Parse(userIdString!);
-        
+
         return Ok(await likeOrchestrator.CreateLikeAsync(postId, authUserId));
     }
 
@@ -56,7 +65,7 @@ public class LikeController(ILikeOrchestrator likeOrchestrator) : ControllerBase
     {
         var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var authUserId = int.Parse(userIdString!);
-        
+
         return Ok(await likeOrchestrator.RemoveLikeAsync(postId, authUserId));
     }
 }
