@@ -15,6 +15,7 @@ import { UsersService } from '../../api/http/services/user.service';
 import { LikesService } from '../../api/http/services/like.service';
 import { AuthService } from '../../api/http/services/auth.service';
 import { PostsService } from '../../api/http/services/post.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tweet',
@@ -43,6 +44,7 @@ export class Tweet implements OnInit {
   private readonly likeService = inject(LikesService);
   private readonly authService = inject(AuthService);
   private readonly postService = inject(PostsService);
+  private readonly router = inject(Router);
 
   ngOnInit(): void {
     this.userService.getById(this.post.authorId)
@@ -75,5 +77,9 @@ export class Tweet implements OnInit {
         this.likes.update(count => count + 1);
       });
     }
+  }
+
+  onReplies(){
+    this.router.navigate(['/tweet', this.post.id])
   }
 }

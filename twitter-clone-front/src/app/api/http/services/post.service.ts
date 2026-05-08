@@ -35,4 +35,8 @@ export class PostsService {
   delete(id: number): Observable<PostDto> {
     return this.http.delete<PostDto>(`${this.url}/${id}`);
   }
+
+  getReplies(id: number): Observable<GetPost[]> {
+    return this.http.get<GetPost[]>(`${this.url}/replies/${id}`)
+  }
 }

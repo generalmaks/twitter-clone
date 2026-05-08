@@ -1,4 +1,4 @@
-<mat-card appearance="outlined" class="mt-3">
+<mat-card appearance="outlined">
     <mat-card-header>
         <div mat-card-avatar class="bg-[url('https://material.angular.dev/assets/img/examples/shiba1.jpg')] bg-cover">
         </div>
@@ -12,7 +12,7 @@
             <span>{{ likes() }}</span>
         </button>
 
-        <button class="flex items-center gap-1">
+        <button class="flex items-center gap-1" (click)="onReplies()">
             <mat-icon>comment</mat-icon>
             <span>{{replies()}}</span>
         </button>
