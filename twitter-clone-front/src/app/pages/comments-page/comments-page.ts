@@ -4,10 +4,11 @@ import { ActivatedRoute } from '@angular/router';
 import { PostsService } from '../../api/http/services/post.service';
 import { Tweet } from "../../components/tweet/tweet";
 import { MatDivider } from '@angular/material/divider'
+import { Composer } from '../../components/composer/composer';
 
 @Component({
   selector: 'app-comments-page',
-  imports: [Tweet, MatDivider],
+  imports: [Tweet, MatDivider, Composer],
   templateUrl: './comments-page.html',
   styleUrl: './comments-page.css',
 })
