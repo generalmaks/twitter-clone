@@ -70,4 +70,10 @@ public class PostController(
     {
         return Ok(await postOrchestrator.CountRepliesAsync(id));
     }
+
+    [HttpGet("replies/{id:int}")]
+    public async Task<ActionResult<List<GetPost>>> GetRepliesToPostAsync(int id)
+    {
+        return Ok(await postOrchestrator.GetRepliesToPostAsync(id));
+    }
 }

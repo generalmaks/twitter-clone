@@ -65,4 +65,13 @@ public class PostRepository(
             .AsNoTracking()
             .CountAsync(p => p.ReplyToPostId == id && !p.IsDeleted);
     }
+
+    public async Task<IEnumerable<PostDto>> GetRepliesToPostAsync(int id)
+    {
+        var postsDao = await db.Posts
+            .AsNoTracking()
+            .Where(p => p.ReplyToPostId == id)
+            .ToListAsync();
+        return mapper.Map<List<PostDto>>(postsDao);
+    }
 }

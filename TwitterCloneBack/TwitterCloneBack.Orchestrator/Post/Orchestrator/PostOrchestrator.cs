@@ -53,4 +53,10 @@ public class PostOrchestrator(
         _ = await GetPostByIdAsync(id);
         return await postRepository.CountRepliesAsync(id);
     }
+
+    public async Task<IEnumerable<PostDto>> GetRepliesToPostAsync(int id)
+    {
+        _ = await GetPostByIdAsync(id);
+        return await postRepository.GetRepliesToPostAsync(id);
+    }
 }
