@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
 
-namespace TwitterCloneBack.Middleware;
+namespace TwitterCloneBack;
 
 public class GlobalExceptionMiddleware(
     RequestDelegate next,

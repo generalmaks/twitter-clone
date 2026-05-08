@@ -5,11 +5,11 @@ using TwitterCloneBack.Model.User.Model;
 using TwitterCloneBack.Post.Contracts;
 using TwitterCloneBack.User.Contracts;
 
-namespace TwitterCloneBack.Mapping;
+namespace TwitterCloneBack;
 
-public class UserMapping : Profile
+public class Mapping : Profile
 {
-    public UserMapping()
+    public Mapping()
     {
         CreateMap<UserDto, GetUser>();
         CreateMap<UserDto, UpdateUser>().ReverseMap();
