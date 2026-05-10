@@ -7,13 +7,13 @@ using TwitterCloneBack.User.Contracts;
 
 namespace TwitterCloneBack.Tests.User.Integration;
 
-public class GetUserByIdAsync : IClassFixture<TwitterCloneWebApplicationFactory>
+public class GetUserByIdAsyncIntegrationTest : IClassFixture<TwitterCloneWebApplicationFactory>
 {
     private const string ApiPrefix = "/api/v1/users";
     private readonly HttpClient _http;
     private readonly TwitterCloneWebApplicationFactory _factory;
 
-    public GetUserByIdAsync(TwitterCloneWebApplicationFactory factory)
+    public GetUserByIdAsyncIntegrationTest(TwitterCloneWebApplicationFactory factory)
     {
         _factory = factory;
         _http = factory.CreateClient();
@@ -28,7 +28,7 @@ public class GetUserByIdAsync : IClassFixture<TwitterCloneWebApplicationFactory>
         using var scope = _factory.Services.CreateScope();
         var db =
             scope.ServiceProvider.GetRequiredService<TwitterCloneContext>();
-        
+
         db.Users.Add(new UserDao
         {
             Id = id,
@@ -45,13 +45,35 @@ public class GetUserByIdAsync : IClassFixture<TwitterCloneWebApplicationFactory>
         // Act
         var response =
             await _http.GetAsync($"{ApiPrefix}/{id}");
-        
+        var content = await response.Content.ReadAsStringAsync();
+
         // Assert
-        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        Assert.True(
+            response.StatusCode == HttpStatusCode.OK,
+            content);
 
         var user = await response.Content.ReadFromJsonAsync<GetUser>();
 
         Assert.NotNull(user);
         Assert.Equal(id, user.Id);
+    }
+
+    [Fact]
+    public async Task GetUserByIdAsync_WhenUserDoesntExist_ReturnsNotFound()
+    {
+        // Arrange
+        int id = 1;
+
+        using var scope = _factory.Services.CreateScope();
+        var db =
+            scope.ServiceProvider.GetRequiredService<TwitterCloneContext>();
+
+        // Act
+        var response =
+            await _http.GetAsync($"{ApiPrefix}/{id}");
+        var content = await response.Content.ReadAsStringAsync();
+
+        // Assert
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 }
