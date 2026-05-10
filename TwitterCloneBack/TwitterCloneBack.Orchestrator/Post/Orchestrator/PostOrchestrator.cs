@@ -10,7 +10,7 @@ public class PostOrchestrator(
     public async Task<PostDto> GetPostByIdAsync(int id)
     {
         return await postRepository.GetPostByIdAsync(id) ??
-               throw new KeyNotFoundException($"Post with id {id} not found");
+               throw new NotFoundException($"Post with id {id} not found");
     }
 
     public async Task<List<PostDto>> GetPostsAsync(int page, int pageSize)
@@ -26,7 +26,7 @@ public class PostOrchestrator(
     public async Task<PostDto> UpdatePostAsync(PostDto postDto)
     {
         return await postRepository.UpdatePostAsync(postDto) ??
-               throw new KeyNotFoundException(
+               throw new NotFoundException(
                    $"Post with id {postDto.Id} not found");
     }
 
@@ -34,7 +34,7 @@ public class PostOrchestrator(
     {
         var post =
             await postRepository.GetPostByIdAsync(updatePost.Id)
-            ?? throw new KeyNotFoundException(
+            ?? throw new NotFoundException(
                 $"Post with id {updatePost.Id} not found");
 
         post.TextContent = updatePost.TextContent ?? post.TextContent;
@@ -45,7 +45,7 @@ public class PostOrchestrator(
     public async Task<PostDto> DeletePostAsync(int id)
     {
         return await postRepository.DeletePostAsync(id) ??
-               throw new KeyNotFoundException($"Post with id {id} not found");
+               throw new NotFoundException($"Post with id {id} not found");
     }
 
     public async Task<int> CountRepliesAsync(int id)

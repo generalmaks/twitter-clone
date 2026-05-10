@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Dal", "Twi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Orchestrator", "TwitterCloneBack.Orchestrator\TwitterCloneBack.Orchestrator.csproj", "{76328E2A-ED73-41FA-9B40-34870F393046}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterCloneBack.Tests", "TwitterCloneBack.Tests\TwitterCloneBack.Tests.csproj", "{CCE47C8E-3169-4450-9F55-BB9B68069265}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +37,9 @@ Global
 		{76328E2A-ED73-41FA-9B40-34870F393046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76328E2A-ED73-41FA-9B40-34870F393046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76328E2A-ED73-41FA-9B40-34870F393046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCE47C8E-3169-4450-9F55-BB9B68069265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCE47C8E-3169-4450-9F55-BB9B68069265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCE47C8E-3169-4450-9F55-BB9B68069265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCE47C8E-3169-4450-9F55-BB9B68069265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -9,14 +9,14 @@ public class LikeOrchestrator(
     public async Task<LikeDto> GetLikeByIdAsync(int likeId)
     {
         return await repository.GetLikeByIdAsync(likeId)
-               ?? throw new KeyNotFoundException(
+               ?? throw new NotFoundException(
                    $"Like with id {likeId} was not found");
     }
 
     public async Task<LikeDto> CreateLikeAsync(int postId, int userId)
     {
         if (await IsPostLikedByUserAsync(postId, userId))
-            throw new ArgumentException(
+            throw new InvalidArgumentException(
                 $"Post with id {postId} is already liked by user with id {userId}");
         return await repository.CreateLikeAsync(postId, userId);
     }
@@ -24,7 +24,7 @@ public class LikeOrchestrator(
     public async Task<LikeDto> RemoveLikeAsync(int postId, int userId)
     {
         return await repository.RemoveLikeAsync(postId, userId)
-               ?? throw new KeyNotFoundException(
+               ?? throw new NotFoundException(
                    $"Like for post {postId} by user {userId} was not found");
     }
 

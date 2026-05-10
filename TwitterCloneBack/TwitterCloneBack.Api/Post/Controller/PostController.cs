@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TwitterCloneBack.Model.Post.Interfaces;
 using TwitterCloneBack.Model.Post.Model;
+using TwitterCloneBack.Orchestrator;
 using TwitterCloneBack.Post.Contracts;
 
 namespace TwitterCloneBack.Post.Controller;
@@ -61,7 +62,7 @@ public class PostController(
         var authUserId = int.Parse(userIdString!);
         var postAuthor = await postOrchestrator.GetPostByIdAsync(id);
         if (postAuthor.AuthorId != authUserId)
-            return Forbid("Tried to delete another users post");
+            throw new ForbiddenException("Tried to delete another users post");
         return Ok(await postOrchestrator.DeletePostAsync(id));
     }
 
