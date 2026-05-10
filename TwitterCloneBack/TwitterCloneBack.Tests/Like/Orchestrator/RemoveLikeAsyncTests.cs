@@ -55,7 +55,7 @@ public class RemoveLikeAsyncTests
         var likeOrchestrator = CreateLikeOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await likeOrchestrator.RemoveLikeAsync(postId, userId));
     }
 }

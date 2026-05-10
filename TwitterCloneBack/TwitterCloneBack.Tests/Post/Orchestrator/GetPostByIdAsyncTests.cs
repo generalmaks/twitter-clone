@@ -53,7 +53,7 @@ public class GetPostByIdAsyncTests
         var postOrchestrator = CreatePostOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await postOrchestrator.GetPostByIdAsync(id));
     }
 }

@@ -71,7 +71,7 @@ public class GetRepliesToPostAsyncTests
         var postOrchestrator = CreatePostOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await postOrchestrator.GetRepliesToPostAsync(id));
 
         _repositoryMock.Verify(

@@ -148,7 +148,7 @@ public class GetUsersAsyncTests
         var userOrchestrator = CreateUserOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(async () =>
+        await Assert.ThrowsAsync<InvalidArgumentException>(async () =>
             await userOrchestrator.GetUsersAsync(page, pageSize));
     }
 }

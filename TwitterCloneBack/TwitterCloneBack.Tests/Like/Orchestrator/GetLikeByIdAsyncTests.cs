@@ -53,7 +53,7 @@ public class GetLikeByIdAsyncTests
         var likeOrchestrator = CreateLikeOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await likeOrchestrator.GetLikeByIdAsync(id));
     }
 }

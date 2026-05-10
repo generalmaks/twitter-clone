@@ -139,7 +139,7 @@ public class UpdateUserAsyncTests
         var userOrchestrator = CreateUserOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(async () =>
+        await Assert.ThrowsAsync<InvalidArgumentException>(async () =>
             await userOrchestrator.UpdateUserAsync(updateUser));
 
         _repositoryMock.Verify(
@@ -164,7 +164,7 @@ public class UpdateUserAsyncTests
         var userOrchestrator = CreateUserOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await userOrchestrator.UpdateUserAsync(updateUser));
 
         _repositoryMock.Verify(

@@ -91,7 +91,7 @@ public class PatchPostAsyncTests
         var postOrchestrator = CreatePostOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await postOrchestrator.PatchPostAsync(updatePost));
 
         _repositoryMock.Verify(

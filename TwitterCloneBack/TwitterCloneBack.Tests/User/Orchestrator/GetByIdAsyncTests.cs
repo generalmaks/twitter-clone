@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using TwitterCloneBack.Model.User.Interfaces;
 using TwitterCloneBack.Model.User.Model;
 using TwitterCloneBack.Orchestrator.User.Orchestrator;
@@ -52,7 +52,7 @@ public class GetByIdAsyncTests()
         var userOrchestrator = CreateUserOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+        await Assert.ThrowsAsync<NotFoundException>(async () =>
             await userOrchestrator.GetUserByIdAsync(id));
     }
 }

@@ -59,7 +59,7 @@ public class CreateLikeAsyncTests
         var likeOrchestrator = CreateLikeOrchestrator();
 
         // Act & Assert
-        await Assert.ThrowsAsync<ArgumentException>(async () =>
+        await Assert.ThrowsAsync<InvalidArgumentException>(async () =>
             await likeOrchestrator.CreateLikeAsync(postId, userId));
 
         _repositoryMock.Verify(
