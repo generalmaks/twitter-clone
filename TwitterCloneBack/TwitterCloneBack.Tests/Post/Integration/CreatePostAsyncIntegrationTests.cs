@@ -64,4 +64,59 @@ public class CreatePostAsyncIntegrationTests(
         // Assert
         Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
+
+    /*
+     Created separate variables because [new string('s', 257)] isn't compile-time
+     constant and thus cant be put inside [InlineData()], and creating 257-long 
+     string by hand is bad idea
+    */
+    public static IEnumerable<object?[]> InvalidUsernames =>
+    [
+        [""],
+        [null],
+        [new string('s', 257)]
+    ];
+
+    [Theory]
+    [MemberData(nameof(InvalidUsernames))]
+    public async Task CreatePostAsync_WhenTextContentIsRequired_ReturnsBadRequest(
+        string? textContent
+    )
+    {
+        // Arrange
+        int authorId = 1;
+        await SeedAsync([CreateUser(authorId)], []);
+        AuthorizeUser(authorId);
+
+        var createPost = new CreatePost
+        {
+            TextContent = textContent!
+        };
+
+        // Act
+        var response = await Http.PostAsJsonAsync(ApiPrefix, createPost);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task CreatePostAsync_WhenTextContentIsTooLong_ReturnsBadRequest()
+    {
+        // Arrange
+        int authorId = 1;
+        await SeedAsync([CreateUser(authorId)], []);
+        AuthorizeUser(authorId);
+
+        var createPost = new CreatePost
+        {
+            TextContent = new string('a', 257)
+        };
+
+        // Act
+        var response = await Http.PostAsJsonAsync(ApiPrefix, createPost);
+
+        // Assert
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+    }
 }
