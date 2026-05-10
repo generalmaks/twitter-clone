@@ -9,3 +9,7 @@
 /TwitterCloneBack/TwitterCloneBack.Api/Properties/*
 /TwitterCloneBack/TwitterCloneBack.Api/appsettings.json
 /TwitterCloneBack/TwitterCloneBack.Api/appsettings.Development.json
+TwitterCloneBack/TwitterCloneBack.sln.DotSettings.user
+
+TwitterCloneBack/TwitterCloneBack.Tests/TestResults
+TwitterCloneBack/TwitterCloneBack.Tests/coveragereport

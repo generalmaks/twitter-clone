@@ -31,6 +31,8 @@ public class UserOrchestrator(
 
     public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize)
     {
+        if (page <= 0 || pageSize <= 0)
+            throw new ArgumentException($"Page or page size cant be 0 or less");
         return await userRepository.GetUsersAsync(page, pageSize);
     }
 
