@@ -11,13 +11,13 @@ public class UserOrchestrator(
     public async Task<UserDto> GetUserByIdAsync(int id)
     {
         return await userRepository.GetUserByIdAsync(id) ??
-               throw new KeyNotFoundException($"User with id {id} not found");
+               throw new NotFoundException($"User with id {id} not found");
     }
 
     public async Task<UserDto> GetUserByEmailAsync(string email)
     {
         return await userRepository.GetUserByEmailAsync(email) ??
-               throw new KeyNotFoundException(
+               throw new NotFoundException(
                    $"User with email {email} not found");
     }
 
@@ -32,7 +32,7 @@ public class UserOrchestrator(
     public async Task<List<UserDto>> GetUsersAsync(int page, int pageSize)
     {
         if (page <= 0 || pageSize <= 0)
-            throw new ArgumentException($"Page or page size cant be 0 or less");
+            throw new InvalidArgumentException($"Page or page size cant be 0 or less");
         return await userRepository.GetUsersAsync(page, pageSize);
     }
 
@@ -52,7 +52,7 @@ public class UserOrchestrator(
     {
         var user =
             await userRepository.GetUserByIdAsync(updateUser.Id)
-            ?? throw new KeyNotFoundException(
+            ?? throw new NotFoundException(
                 $"User with id {updateUser.Id} not found");
 
         user.Username = updateUser.Username ?? user.Username;
@@ -62,7 +62,7 @@ public class UserOrchestrator(
         if (updateUser.Password != null)
         {
             if (updateUser.Password.Length < 8)
-                throw new ArgumentException(
+                throw new InvalidArgumentException(
                     "Password length cant be shorter than 8 characters");
 
             user.PasswordHash =
@@ -75,7 +75,7 @@ public class UserOrchestrator(
     public async Task<UserDto> DeleteUserAsync(int id)
     {
         return await userRepository.DeleteUserAsync(id) ??
-               throw new KeyNotFoundException($"User with id {id} not found");
+               throw new NotFoundException($"User with id {id} not found");
     }
 
     public async Task<bool> IsCorrectPassword(int userId, string password)
@@ -89,7 +89,7 @@ public class UserOrchestrator(
     {
         var hash =
             BCrypt.Net.BCrypt.HashPassword(password) ??
-            throw new ArgumentException("Could not hash password");
+            throw new InvalidArgumentException("Could not hash password");
         return Encoding.UTF8.GetBytes(hash);
     }
 }
