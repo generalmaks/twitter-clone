@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TwitterCloneBack.Login.Contracts;
 using TwitterCloneBack.Model.User.Contracts;
 using TwitterCloneBack.Model.User.Interfaces;
+using TwitterCloneBack.Orchestrator;
 using TwitterCloneBack.User.Contracts;
 
 namespace TwitterCloneBack.Login;
@@ -37,7 +38,7 @@ public class AuthController(
     {
         if (await userOrchestrator.IsUserAlreadyExistsAsync(registerUser.Email,
                 registerUser.Username))
-            throw new ArgumentException("User already exists");
+            throw new InvalidArgumentException("User already exists");
 
         var user =
             await userOrchestrator.CreateUserAsync(new CreateUser
