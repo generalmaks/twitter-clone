@@ -11,5 +11,5 @@ public record RegisterUser(
     string DisplayUsername,
     [Required] [EmailAddress] string Email,
     [Required] [MinLength(8)] string UnhashedPassword,
-    [MaxLength(256)] string Bio
+    [MaxLength(256)] string? Bio
 );
