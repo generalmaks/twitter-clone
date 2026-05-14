@@ -1,51 +1,48 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TwitterCloneBack;
 using TwitterCloneBack.Dal;
 
 namespace TwitterCloneBack.Tests;
 
-public class TwitterCloneWebApplicationFactory
-    : WebApplicationFactory<Program>
+public class TwitterCloneWebApplicationFactory<TProgram>
+    : WebApplicationFactory<TProgram> where TProgram : class
 {
-    public TwitterCloneWebApplicationFactory()
-    {
-        Program.StartupType = typeof(TestStartup);
-    }
-
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureAppConfiguration((_, config) =>
+        builder.ConfigureServices(services =>
         {
-            config.AddInMemoryCollection(new Dictionary<string, string?>
+            var dbContextOptionsDescriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(DbContextOptions<TwitterCloneContext>));
+            if (dbContextOptionsDescriptor != null)
             {
-                ["Jwt:Key"] = "test-jwt-key-with-enough-length-for-tests",
-                ["Jwt:Issuer"] = "test-issuer",
-                ["Jwt:Audience"] = "test-audience"
+                services.Remove(dbContextOptionsDescriptor);
+            }
+
+            var ctxDescriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(TwitterCloneContext));
+            if (ctxDescriptor != null)
+            {
+                services.Remove(ctxDescriptor);
+            }
+
+            var genericOptionsDescriptor = services.SingleOrDefault(
+                d => d.ServiceType == typeof(DbContextOptions));
+            if (genericOptionsDescriptor != null)
+            {
+                services.Remove(genericOptionsDescriptor);
+            }
+
+            var dbName = $"TwitterCloneTestDb-{Guid.NewGuid()}";
+            
+            services.AddEntityFrameworkInMemoryDatabase();
+
+            services.AddDbContext<TwitterCloneContext>((sp, options) =>
+            {
+                options.UseInMemoryDatabase(dbName)
+                       .UseInternalServiceProvider(sp);
             });
-        });
-    }
-
-    protected override void Dispose(bool disposing)
-    {
-        Program.StartupType = typeof(Startup);
-        base.Dispose(disposing);
-    }
-}
-
-public class TestStartup(IConfiguration configuration)
-    : Startup(configuration)
-{
-    protected override void ConfigureDb(IServiceCollection services)
-    {
-        var dbName = $"TwitterCloneTestDb-{Guid.NewGuid()}";
-
-        services.AddDbContext<TwitterCloneContext>(options =>
-        {
-            options.UseInMemoryDatabase(dbName);
         });
     }
 }

@@ -5,9 +5,9 @@ using TwitterCloneBack.Model.Like.Model;
 namespace TwitterCloneBack.Tests.Like.Integration;
 
 public class GetLikesAsyncIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : LikeIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task GetLikesOnPostAsync_WhenLikesExist_ReturnsLikes()

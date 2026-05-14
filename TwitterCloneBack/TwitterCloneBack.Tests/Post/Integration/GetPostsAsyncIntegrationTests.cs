@@ -5,9 +5,9 @@ using TwitterCloneBack.Post.Contracts;
 namespace TwitterCloneBack.Tests.Post.Integration;
 
 public class GetPostsAsyncIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : PostIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task GetPostsAsync_WhenPostsExist_ReturnsPosts()

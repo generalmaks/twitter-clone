@@ -5,9 +5,9 @@ using TwitterCloneBack.Post.Contracts;
 namespace TwitterCloneBack.Tests.Post.Integration;
 
 public class PostRepliesIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : PostIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task CountRepliesAsync_WhenPostExists_ReturnsReplyCount()

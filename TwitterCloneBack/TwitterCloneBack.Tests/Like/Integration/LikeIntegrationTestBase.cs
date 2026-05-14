@@ -12,10 +12,10 @@ namespace TwitterCloneBack.Tests.Like.Integration;
 public abstract class LikeIntegrationTestBase
 {
     protected const string ApiPrefix = "/api/v1/like";
-    protected readonly TwitterCloneWebApplicationFactory Factory;
+    protected readonly TwitterCloneWebApplicationFactory<Program> Factory;
     protected readonly HttpClient Http;
 
-    protected LikeIntegrationTestBase(TwitterCloneWebApplicationFactory factory)
+    protected LikeIntegrationTestBase(TwitterCloneWebApplicationFactory<Program> factory)
     {
         Factory = factory;
         Http = factory.CreateClient();

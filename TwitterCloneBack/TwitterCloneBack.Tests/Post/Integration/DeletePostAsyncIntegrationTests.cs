@@ -7,9 +7,9 @@ using TwitterCloneBack.Model.Post.Model;
 namespace TwitterCloneBack.Tests.Post.Integration;
 
 public class DeletePostAsyncIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : PostIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task DeletePostAsync_WhenUserIsAuthor_DeletesPost()
