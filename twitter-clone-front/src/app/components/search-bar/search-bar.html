@@ -1,13 +1,22 @@
-<mat-form-field appearance="outline" class="w-96 search-field">
+<form (ngSubmit)="search()">
+  <mat-form-field appearance="outline" class="w-96 search-field">
     <mat-label>Search</mat-label>
 
-    <input matInput type="text" [(ngModel)]="searchText" placeholder="Search posts..." />
+    <input
+      matInput
+      name="search"
+      type="text"
+      [ngModel]="searchText()"
+      (ngModelChange)="searchText.set($event)"
+      placeholder="Search posts..."
+    />
 
-    @if (searchText() != '') {
-    <button mat-icon-button matSuffix type="button" aria-label="Clear search" (click)="clearSearch()">
+    @if (searchText() !== '') {
+      <button mat-icon-button matSuffix type="button" (click)="clearSearch()">
         <mat-icon>close</mat-icon>
-    </button>
+      </button>
     }
 
     <mat-icon matPrefix>search</mat-icon>
-</mat-form-field>
+  </mat-form-field>
+</form>

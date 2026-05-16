@@ -77,4 +77,16 @@ public class PostController(
     {
         return Ok(await postOrchestrator.GetRepliesToPostAsync(id));
     }
+
+    [HttpGet("search/{search}/page/{page:int}/pageSize/{pageSize:int}")]
+    public async Task<ActionResult<List<GetPost>>> GetPostsByTextSearchAsync(
+        string search,
+        int page,
+        int pageSize
+    )
+    {
+        return Ok(
+            await postOrchestrator.GetPostsByTextSearchAsync(search, page,
+                pageSize));
+    }
 }

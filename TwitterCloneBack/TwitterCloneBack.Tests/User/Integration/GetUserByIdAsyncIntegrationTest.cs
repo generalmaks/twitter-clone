@@ -7,13 +7,13 @@ using TwitterCloneBack.User.Contracts;
 
 namespace TwitterCloneBack.Tests.User.Integration;
 
-public class GetUserByIdAsyncIntegrationTest : IClassFixture<TwitterCloneWebApplicationFactory>
+public class GetUserByIdAsyncIntegrationTest : IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     private const string ApiPrefix = "/api/v1/users";
     private readonly HttpClient _http;
-    private readonly TwitterCloneWebApplicationFactory _factory;
+    private readonly TwitterCloneWebApplicationFactory<Program> _factory;
 
-    public GetUserByIdAsyncIntegrationTest(TwitterCloneWebApplicationFactory factory)
+    public GetUserByIdAsyncIntegrationTest(TwitterCloneWebApplicationFactory<Program> factory)
     {
         _factory = factory;
         _http = factory.CreateClient();

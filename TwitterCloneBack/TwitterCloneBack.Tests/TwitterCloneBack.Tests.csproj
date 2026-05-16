@@ -20,6 +20,7 @@
     <ItemGroup>
         <Using Include="Xunit"/>
         <Using Include="TwitterCloneBack.Orchestrator"/>
+        <Using Include="TwitterCloneBack"/>
     </ItemGroup>
 
     <ItemGroup>

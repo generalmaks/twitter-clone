@@ -59,4 +59,10 @@ public class PostOrchestrator(
         _ = await GetPostByIdAsync(id);
         return await postRepository.GetRepliesToPostAsync(id);
     }
+
+    public async Task<IEnumerable<PostDto>> GetPostsByTextSearchAsync(string search, int page, int pageSize)
+    {
+        return await postRepository.GetPostsByTextSearchAsync(search, page,
+            pageSize);
+    }
 }

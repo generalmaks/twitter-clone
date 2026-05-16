@@ -8,9 +8,9 @@ using TwitterCloneBack.Post.Contracts;
 namespace TwitterCloneBack.Tests.Post.Integration;
 
 public class CreatePostAsyncIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : PostIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task CreatePostAsync_WhenUserIsAuthorized_CreatesPost()

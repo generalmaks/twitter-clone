@@ -39,4 +39,8 @@ export class PostsService {
   getReplies(id: number): Observable<GetPost[]> {
     return this.http.get<GetPost[]>(`${this.url}/replies/${id}`)
   }
+
+  getBySearchText(query: string, page = 1, pageSize = 20): Observable<GetPost[]> {
+    return this.http.get<GetPost[]>(`${this.url}/search/${encodeURIComponent(query)}/page/${page}/pageSize/${pageSize}`);
+  }
 }

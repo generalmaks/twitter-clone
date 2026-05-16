@@ -4,9 +4,9 @@ using System.Net.Http.Json;
 namespace TwitterCloneBack.Tests.Like.Integration;
 
 public class LikeStatusIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : LikeIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task CountByPostIdAsync_WhenLikesExist_ReturnsCount()

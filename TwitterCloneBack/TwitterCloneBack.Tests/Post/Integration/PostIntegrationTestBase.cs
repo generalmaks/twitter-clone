@@ -11,10 +11,10 @@ namespace TwitterCloneBack.Tests.Post.Integration;
 public abstract class PostIntegrationTestBase
 {
     protected const string ApiPrefix = "/api/v1/posts";
-    protected readonly TwitterCloneWebApplicationFactory Factory;
+    protected readonly TwitterCloneWebApplicationFactory<Program> Factory;
     protected readonly HttpClient Http;
 
-    protected PostIntegrationTestBase(TwitterCloneWebApplicationFactory factory)
+    protected PostIntegrationTestBase(TwitterCloneWebApplicationFactory<Program> factory)
     {
         Factory = factory;
         Http = factory.CreateClient();

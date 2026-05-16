@@ -7,9 +7,9 @@ using TwitterCloneBack.Model.Like.Model;
 namespace TwitterCloneBack.Tests.Like.Integration;
 
 public class CreateLikeAsyncIntegrationTests(
-    TwitterCloneWebApplicationFactory factory)
+    TwitterCloneWebApplicationFactory<Program> factory)
     : LikeIntegrationTestBase(factory),
-        IClassFixture<TwitterCloneWebApplicationFactory>
+        IClassFixture<TwitterCloneWebApplicationFactory<Program>>
 {
     [Fact]
     public async Task CreateLikeAsync_WhenUserIsAuthorized_CreatesLike()

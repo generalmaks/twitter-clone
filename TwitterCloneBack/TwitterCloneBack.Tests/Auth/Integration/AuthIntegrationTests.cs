@@ -10,19 +10,18 @@
 
   namespace TwitterCloneBack.Tests.Auth.Integration;
 
-  public class AuthIntegrationTests : IClassFixture<TwitterCloneWebApplicationFactory>
+  public class AuthIntegrationTests : IClassFixture<TwitterCloneWebApplicationFactory<Program>>
   {
       private const string ApiPrefix = "/api/v1/auth";
 
-      private readonly TwitterCloneWebApplicationFactory _factory;
+      private readonly TwitterCloneWebApplicationFactory<Program> _factory;
       private readonly HttpClient _http;
 
-      public AuthIntegrationTests(TwitterCloneWebApplicationFactory factory)
+      public AuthIntegrationTests(TwitterCloneWebApplicationFactory<Program> factory)
       {
           _factory = factory;
           _http = factory.CreateClient();
       }
-
       [Fact]
       public async Task Login_WhenCredentialsAreCorrect_ReturnsToken()
       {

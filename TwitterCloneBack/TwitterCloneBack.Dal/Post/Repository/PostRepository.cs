@@ -74,4 +74,16 @@ public class PostRepository(
             .ToListAsync();
         return mapper.Map<List<PostDto>>(postsDao);
     }
+
+    public async Task<IEnumerable<PostDto>> GetPostsByTextSearchAsync(string search, int page, int pageSize)
+    {
+        return mapper.Map<List<PostDto>>(
+            await db.Posts
+                .AsNoTracking()
+                .Where(p => !p.IsDeleted && p.TextContent.Contains(search))
+                .OrderByDescending(p => p.CreatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync());
+    }
 }
