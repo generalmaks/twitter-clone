@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TwitterCloneBack.Dal;
 
@@ -11,9 +12,11 @@ using TwitterCloneBack.Dal;
 namespace TwitterCloneBack.Dal.Migrations
 {
     [DbContext(typeof(TwitterCloneContext))]
-    partial class TwitterCloneContextModelSnapshot : ModelSnapshot
+    [Migration("20260517130111_ChangedBioMaxLengthTo256")]
+    partial class ChangedBioMaxLengthTo256
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
