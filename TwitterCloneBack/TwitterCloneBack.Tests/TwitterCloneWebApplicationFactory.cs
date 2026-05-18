@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TwitterCloneBack.Dal;
 
@@ -11,6 +12,16 @@ public class TwitterCloneWebApplicationFactory<TProgram>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        builder.ConfigureAppConfiguration((context, config) =>
+        {
+            config.AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                ["Jwt:Key"] = "11111111111111111111111111111111",
+                ["Jwt:Issuer"] = "TwitterClone",
+                ["Jwt:Audience"] = "TwitterCloneNg"
+            });
+        });
+
         builder.ConfigureServices(services =>
         {
             var dbContextOptionsDescriptor = services.SingleOrDefault(

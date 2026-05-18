@@ -24,7 +24,7 @@ public class UserDao
     [StringLength(30)]
     public string DisplayUsername { get; set; } = null!;
 
-    [StringLength(200)]
+    [StringLength(256)]
     public string? Bio { get; set; }
 
     public DateTime CreatedAt { get; set; }
